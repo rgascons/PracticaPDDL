@@ -10,16 +10,16 @@
   (:init
     (predecesor harryPotter1 harryPotter2)
 	(predecesor seniorAnillos1 seniorAnillos2)
-	(predecesor seniorAnillos1 seniorAnillos3)
+	;(predecesor seniorAnillos1 seniorAnillos3)
 	(predecesor seniorAnillos2 seniorAnillos3)
 	(predecesor starWars1 starWars2)
     (mes_libre m1) (mes_libre m2) (mes_libre m3) (mes_libre m4) (mes_libre m5) (mes_libre m6) (mes_libre m7) (mes_libre m8) (mes_libre m9)
 	(mes_libre m10) (mes_libre m11) (mes_libre m12)
 	(libro_leido starWars1)
-	(libro_a_leer harryPotter1)
+	;(libro_leido seniorAnillos1)
+	;(libro_a_leer harryPotter1)
 	(libro_a_leer harryPotter2)
-	(libro_a_leer seniorAnillos1)
-	(libro_a_leer seniorAnillos2)
+	;(libro_a_leer seniorAnillos2)
 	(libro_a_leer seniorAnillos3)
 	(libro_a_leer starWars2)
 	(libro_a_leer elHobbit)
@@ -40,7 +40,11 @@
   ) 
 
   (:goal 
-	(forall (?l - Libro) (or (libro_leido ?l) (and (libro_a_leer ?l) (libro_asignado ?l))))
+	(forall (?l - Libro) (imply (libro_a_leer ?l) (and
+		(libro_asignado ?l)
+		(forall (?pred - Libro) (imply (predecesor ?pred ?l) (libro_asignado ?l)))
+		)
+	))
 	;(libro_asignado harryPotter2)
 	;(libro_asignado seniorAnillos1)
 	;(libro_asignado seniorAnillos2)
