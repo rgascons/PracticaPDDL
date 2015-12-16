@@ -21,7 +21,9 @@
 		:precondition (and
 			(not (libro_asignado ?libro))
 			(libro_a_leer ?libro)
-			(not (exists (?pred - Libro) (and (predecesor ?pred ?libro) (and (not (libro_asignado ?pred)) (not (libro_leido ?pred))))))
+			(not (exists (?pred - Libro) (and (predecesor ?pred ?libro) 
+										(or (asignado_en ?pred ?mes) (not (libro_asignado ?pred)))
+										(not (libro_leido ?pred)))))
 		)
 		:effect (and (asignado_en ?libro ?mes) (libro_asignado ?libro))
 	)
