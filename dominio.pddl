@@ -1,10 +1,25 @@
 (define (domain libros)
-(:requirements :strips)
-(:predicates (val ?x ?vx)
-				(next ?x ?y))
+	(:requirements :strips :adl :typing)
+	
+	(:types
+		Libro Mes - Object
+	)
+	
+	(:predicates
+		(predecesor ?x - Libro ?y - Libro) ;?x es predecesor de ?y
+		(anterior ?m - Mes ?n - Mes)
+		(mes_libre ?m - Mes)
+		(mes_ocupado ?m - Mes)
+		(libro_asignado ?l - Libro)
+		(libro_leido ?l - Libro)
+		(libro_a_leer ?l - Libro)
+		(asignado_en ?l - Libro ?m - Mes)
+	)
 
-(:action swap
-	:parameters (?x ?y ?vx ?vy)
-	:precondition (and (val ?x ?vx) (val ?y ?vy) (next ?x ?y))
-	:effect (and (val ?y ?vx) (val ?x ?vy) (not (val ?x ?vy)) (not (val ?y ?vy)))
-))
+	(:action asignar
+		:parameters (?libro - Libro ?mes - Mes)
+		:precondition (and (not (asignado_en ?libro ?mes)) (not (exists (?pred) (and (predecesor ?pred ?libro) (not (libro_asignado ?pred))) ) ) )
+		:effect (and (asignado_en ?libro ?mes) (libro_asignado))
+	)
+	
+)
