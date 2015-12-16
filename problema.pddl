@@ -3,9 +3,8 @@
   (:domain libros)
 
   (:objects
-
     m1 m2 m3 m4 m5 m6 m6 m7 m8 m9 m10 m11 m12 - Mes
-	harryPotter1 harryPotter2 seniorAnillos1 seniorAnillos2 starWars1 starWars2- Libro
+	harryPotter1 harryPotter2 seniorAnillos1 seniorAnillos2 starWars1 starWars2 - Libro
   )
 
   (:init
