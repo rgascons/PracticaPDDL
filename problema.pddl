@@ -3,17 +3,7 @@
   (:domain libros)
 
   (:objects
-<<<<<<< HEAD
-    
-  )
 
-  (:init
-    
-  ) 
-
-  (:goal
-  
-=======
     m1 m2 m3 m4 m5 m6 m6 m7 m8 m9 m10 m11 m12 - Mes
 	harryPotter1 harryPotter2 seniorAnillos1 seniorAnillos2 starWars1 starWars2- Libro
   )
@@ -47,12 +37,7 @@
   ) 
 
   (:goal 
-	;forma ineficiente pensar como hacer mejor
-	(libro_asignado harryPoter2)
-	(libro_asignado harryPotter2)
-	(libro_asignado seniorAnillos1)
-	(libro_asignado seniorAnillos2)
-	(libro_asignado starWars2)
->>>>>>> 85ea794baa02be86918b2687fac08262d89ebdf3
+
+	(forall (?l - Libro) (or (libro_leido ?l) (and (libro_a_leer ?l) (libro_asignado ?l))))
   )
 )
