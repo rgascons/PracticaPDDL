@@ -36,11 +36,6 @@
   ) 
 
   (:goal 
-	;forma ineficiente pensar como hacer mejor
-	(libro_asignado harryPoter2)
-	(libro_asignado harryPotter2)
-	(libro_asignado seniorAnillos1)
-	(libro_asignado seniorAnillos2)
-	(libro_asignado starWars2)
+	(forall (?l - Libro) (or (libro_leido ?l) (and (libro_a_leer ?l) (libro_asignado ?l))))
   )
 )
