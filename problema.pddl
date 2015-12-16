@@ -4,12 +4,14 @@
 
   (:objects
     m1 m2 m3 m4 m5 m6 m6 m7 m8 m9 m10 m11 m12 - Mes
-	harryPotter1 harryPotter2 seniorAnillos1 seniorAnillos2 starWars1 starWars2 - Libro
+	harryPotter1 harryPotter2 seniorAnillos1 seniorAnillos2 seniorAnillos3 starWars1 starWars2 elHobbit - Libro
   )
 
   (:init
     (predecesor harryPotter1 harryPotter2)
 	(predecesor seniorAnillos1 seniorAnillos2)
+	(predecesor seniorAnillos1 seniorAnillos3)
+	(predecesor seniorAnillos2 seniorAnillos3)
 	(predecesor starWars1 starWars2)
     (mes_libre m1) (mes_libre m2) (mes_libre m3) (mes_libre m4) (mes_libre m5) (mes_libre m6) (mes_libre m7) (mes_libre m8) (mes_libre m9)
 	(mes_libre m10) (mes_libre m11) (mes_libre m12)
@@ -18,7 +20,9 @@
 	(libro_a_leer harryPotter2)
 	(libro_a_leer seniorAnillos1)
 	(libro_a_leer seniorAnillos2)
+	(libro_a_leer seniorAnillos3)
 	(libro_a_leer starWars2)
+	(libro_a_leer elHobbit)
 	(anterior m1 m2) (anterior m1 m3) (anterior m1 m4) (anterior m1 m5) (anterior m1 m6) (anterior m1 m7) (anterior m1 m8) (anterior m1 m9)
 	(anterior m1 m10) (anterior m1 m11) (anterior m1 m12)
 	(anterior m2 m3) (anterior m2 m4) (anterior m2 m5) (anterior m2 m6) (anterior m2 m7) (anterior m2 m8) (anterior m2 m9) (anterior m2 m10)

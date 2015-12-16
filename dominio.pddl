@@ -27,5 +27,4 @@
 		)
 		:effect (and (asignado_en ?libro ?mes) (libro_asignado ?libro))
 	)
-	
 )
