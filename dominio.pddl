@@ -19,9 +19,9 @@
 	(:action asignar
 		:parameters (?libro - Libro ?mes - Mes)
 		:precondition (and
-			(not (asignado_en ?libro ?mes))
-			;(not (libro_leido ?libro))
-			(not (exists (?pred - Libro) (and (predecesor ?pred ?libro) (not (libro_asignado ?pred))) ) )
+			(not (libro_asignado ?libro))
+			(libro_a_leer ?libro)
+			(not (exists (?pred - Libro) (and (predecesor ?pred ?libro) (and (not (libro_asignado ?pred)) (not (libro_leido ?pred))))))
 		)
 		:effect (and (asignado_en ?libro ?mes) (libro_asignado ?libro))
 	)

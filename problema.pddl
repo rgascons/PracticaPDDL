@@ -36,7 +36,10 @@
   ) 
 
   (:goal 
-
 	(forall (?l - Libro) (or (libro_leido ?l) (and (libro_a_leer ?l) (libro_asignado ?l))))
+	;(libro_asignado harryPotter2)
+	;(libro_asignado seniorAnillos1)
+	;(libro_asignado seniorAnillos2)
+	;(libro_asignado starWars2)
   )
 )
