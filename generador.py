@@ -4,6 +4,7 @@ import random
 import itertools
 import math
 import re
+import ConfigParser as cp
 
 def generate_books(number_of_books):
 	file = open("MOCK_DATA.csv", "r")
@@ -18,8 +19,8 @@ def generate_random_sagas(books):
 	sagas = []
 	for idx, book in enumerate(books):
 		saga_chance = random.randint(1,100)
-		if saga_chance <= 15:	#change of being a saga could be given by the user
-			saga_size = random.randint(2, 7)	#could be replaced with parameters given by the user
+		if saga_chance <= CHANCE_SAGA:
+			saga_size = random.randint(SAGA_MIN_BOOKS, SAGA_MAX_BOOKS)
 			aux = []
 			for i in range(1, saga_size+1):
 				aux.append(book + "_" + str(i))
@@ -29,7 +30,7 @@ def generate_random_sagas(books):
 	return books + list(itertools.chain(*sagas)), sagas
 
 def print_problem(books, sagas):
-	f = open('problem_test.pddl', 'w')
+	f = open('problema_rand.pddl', 'w')
 	f.truncate()	#erease any existing content in the file
 
 	print ("(define (problem libros)", file=f)
@@ -84,23 +85,14 @@ def print_problem(books, sagas):
 	print (")", file=f)
 	print (")", file=f)
 
-if len(sys.argv) < 2:
-	print ("Error: no arguments")
-	print ("Usage: please enter a number of books greater or equal than 20")
-	exit(-1)
+cfg = cp.ConfigParser()
+cfg.read("config.ini")
 
-try:
-	numberBooks = int(sys.argv[1])
-except ValueError:
-	print ("Error: not a number")
-	print ("Usage: please enter a number of books greater or equal than 20")
-	exit(-1)
+NUM_BOOKS = int(cfg.get("APP", "num_books"))
+CHANCE_SAGA = int(cfg.get("APP", "chance_saga"))
+SAGA_MIN_BOOKS = int(cfg.get("APP", "saga_min_books"))
+SAGA_MAX_BOOKS = int(cfg.get("APP", "saga_max_books"))
 
-if numberBooks < 20:
-	print ("Error: invalid number")
-	print ("Usage: please enter a number of books greater or equal than 20")
-	exit(-1)
-
-books = generate_books(numberBooks)
+books = generate_books(NUM_BOOKS)
 books, sagas = generate_random_sagas(books)
 print_problem(books, sagas)
