@@ -52,13 +52,17 @@ def print_problem(books, sagas):
 	for i in range(0, eligible):
 		rand_book = random.randint(0, len(books)-1)
 		book = books[rand_book]
-		p = re.compile("[a-zA-Z_]*[0-9]+")	#match if the book is part of a saga, if so add the first book of the saga to the set
+		p = re.compile("[a-zA-Z_]*[0-9]+")	#match if the book is part of a saga, if so add the last read book of the saga to the set
 		match = p.match(book)
 		if match is None:
 			read_books.add(book)
 		else:
-			first_of_the_saga = re.sub(r"[0-9]+", "1", book)
-			read_books.add(first_of_the_saga)
+			k = 1
+			book_of_the_saga = re.sub(r"[0-9]+", str(k), book)
+			while book_of_the_saga in read_books:
+				k+=1
+				book_of_the_saga = re.sub(r"[0-9]+", str(k), book)
+			read_books.add(book_of_the_saga)
 	for book in read_books:
 		print ("(libro_leido " + book + ")", file=f)
 
