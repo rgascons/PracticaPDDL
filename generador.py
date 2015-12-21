@@ -43,11 +43,9 @@ def print_problem(books, sagas):
 		saga_size = len(saga)
 		for i in range(0, saga_size-1):
 			print ("(predecesor " + saga[i] + " " + saga[i+1] + ")", file=f)
-	print ("(mes_libre m1) (mes_libre m2) (mes_libre m3) (mes_libre m4) (mes_libre m5) (mes_libre m6) (mes_libre m7) (mes_libre m8) (mes_libre m9)", file=f)
-	print ("(mes_libre m10) (mes_libre m11) (mes_libre m12)", file=f)
 
 	# Choose some books that has been read by the user
-	eligible = random.randint(0, int(round(math.sqrt(len(books)))))
+	eligible = random.randint(0, len(books)-1)
 	read_books = set()
 	for i in range(0, eligible):
 		rand_book = random.randint(0, len(books)-1)
@@ -62,13 +60,14 @@ def print_problem(books, sagas):
 			while book_of_the_saga in read_books:
 				k+=1
 				book_of_the_saga = re.sub(r"[0-9]+", str(k), book)
-			read_books.add(book_of_the_saga)
+			if book_of_the_saga in sagas:
+				read_books.add(book_of_the_saga)
 	for book in read_books:
 		print ("(libro_leido " + book + ")", file=f)
 
 	# Choose books that the user wants to read
 	books_to_read = set()
-	eligible = random.randint(1, 12)
+	eligible = random.randint(1, len(books)-eligible)
 	for i in range(0, eligible):
 		rand_book = random.randint(0, len(books)-1)
 		book = books[rand_book]
