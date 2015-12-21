@@ -64,7 +64,7 @@ def print_problem(books, sagas):
 
 	# Choose books that the user wants to read
 	books_to_read = set()
-	eligible = random.randint(1, 12)	#cual es el limite?
+	eligible = random.randint(1, 12)
 	for i in range(0, eligible):
 		rand_book = random.randint(0, len(books)-1)
 		book = books[rand_book]
@@ -88,11 +88,11 @@ def print_problem(books, sagas):
 cfg = cp.ConfigParser()
 cfg.read("config.ini")
 
-NUM_BOOKS = int(cfg.get("APP", "num_books"))
+NUM_DIF_BOOKS = int(cfg.get("APP", "num_dif_books"))
 CHANCE_SAGA = int(cfg.get("APP", "chance_saga"))
 SAGA_MIN_BOOKS = int(cfg.get("APP", "saga_min_books"))
 SAGA_MAX_BOOKS = int(cfg.get("APP", "saga_max_books"))
 
-books = generate_books(NUM_BOOKS)
+books = generate_books(NUM_DIF_BOOKS)
 books, sagas = generate_random_sagas(books)
 print_problem(books, sagas)
