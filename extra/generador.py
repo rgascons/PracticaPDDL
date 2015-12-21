@@ -30,7 +30,7 @@ def generate_random_sagas(books):
 	return books + list(itertools.chain(*sagas)), sagas
 
 def print_problem(books, sagas):
-	f = open('problema_rand.pddl', 'w')
+	f = open(OUTPUT_FILE, 'w')
 	f.truncate()	#erease any existing content in the file
 
 	print ("(define (problem libros)", file=f)
@@ -43,11 +43,9 @@ def print_problem(books, sagas):
 		saga_size = len(saga)
 		for i in range(0, saga_size-1):
 			print ("(predecesor " + saga[i] + " " + saga[i+1] + ")", file=f)
-	print ("(mes_libre m1) (mes_libre m2) (mes_libre m3) (mes_libre m4) (mes_libre m5) (mes_libre m6) (mes_libre m7) (mes_libre m8) (mes_libre m9)", file=f)
-	print ("(mes_libre m10) (mes_libre m11) (mes_libre m12)", file=f)
 
 	# Choose some books that has been read by the user
-	eligible = random.randint(0, int(round(math.sqrt(len(books)))))
+	eligible = random.randint(0, len(books)-1)
 	read_books = set()
 	for i in range(0, eligible):
 		rand_book = random.randint(0, len(books)-1)
@@ -62,17 +60,18 @@ def print_problem(books, sagas):
 			while book_of_the_saga in read_books:
 				k+=1
 				book_of_the_saga = re.sub(r"[0-9]+", str(k), book)
-			read_books.add(book_of_the_saga)
+			if book_of_the_saga in sagas:
+				read_books.add(book_of_the_saga)
 	for book in read_books:
 		print ("(libro_leido " + book + ")", file=f)
 
 	# Choose books that the user wants to read
 	books_to_read = set()
-	eligible = random.randint(1, 12)
+	eligible = random.randint(1, len(books)-eligible)
 	for i in range(0, eligible):
 		rand_book = random.randint(0, len(books)-1)
 		book = books[rand_book]
-		if not rand_book in read_books:
+		if not book in read_books:
 			books_to_read.add(book)
 	for book in books_to_read:
 		print ("(libro_a_leer " + book + ")", file=f)
@@ -96,6 +95,7 @@ NUM_DIF_BOOKS = int(cfg.get("APP", "num_dif_books"))
 CHANCE_SAGA = int(cfg.get("APP", "chance_saga"))
 SAGA_MIN_BOOKS = int(cfg.get("APP", "saga_min_books"))
 SAGA_MAX_BOOKS = int(cfg.get("APP", "saga_max_books"))
+OUTPUT_FILE = cfg.get("APP", "output_file")
 
 books = generate_books(NUM_DIF_BOOKS)
 books, sagas = generate_random_sagas(books)
