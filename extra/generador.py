@@ -29,7 +29,17 @@ def generate_random_sagas(books):
 
 	return books + list(itertools.chain(*sagas)), sagas
 
-def print_problem(books, sagas):
+def generare_random_parallels(books):
+	par = []
+	max_par = SAGA_MAX_BOOKS
+	random_num_saga = random.randrange(1, max_par+1, 2)
+	random_unique_ints = random.sample(range(len(books)), random_num_saga)
+	for i,j in zip(random_unique_ints[0::2], random_unique_ints[1::2]):
+		par.append((books[i], books[j]))
+	return par
+
+
+def print_problem(books, sagas, pars):
 	f = open(OUTPUT_FILE, 'w')
 	f.truncate()	#erease any existing content in the file
 
@@ -39,6 +49,8 @@ def print_problem(books, sagas):
 	print (" ".join(books) + " - Libro", file=f)
 	print (")", file=f)
 	print ("(:init", file=f)
+	for (x, y) in pars:
+		print ("(paralelo " + x + " " + y + ")", file=f)
 	for saga in sagas:
 		saga_size = len(saga)
 		for i in range(0, saga_size-1):
@@ -76,17 +88,19 @@ def print_problem(books, sagas):
 	for book in books_to_read:
 		print ("(libro_a_leer " + book + ")", file=f)
 
-	print ("(anterior m1 m2) (anterior m2 m3) (anterior m3 m4) (anterior m4 m5) (anterior m5 m6)", file=f)
-	print ("(anterior m6 m7) (anterior m7 m8) (anterior m8 m9) (anterior m9 m10) (anterior m10 m11) (anterior m11 m12)", file=f)
+	print ("(anterior m1 m2) (anterior m1 m3) (anterior m1 m4) (anterior m1 m5) (anterior m1 m6) (anterior m1 m7)", file=f)
+	print ("(anterior m1 m8) (anterior m1 m9) (anterior m1 m10) (anterior m1 m11) (anterior m1 m12)", file=f)
+	print ("(anterior m2 m3) (anterior m2 m4) (anterior m2 m5) (anterior m2 m6) (anterior m2 m7) (anterior m2 m8)", file=f)
+	print ("(anterior m2 m9) (anterior m2 m10) (anterior m2 m11) (anterior m2 m12)", file=f)
+	print ("(anterior m3 m4) (anterior m3 m5) (anterior m3 m6) (anterior m3 m7) (anterior m3 m8) (anterior m3 m9)", file=f)
+	print ("(anterior m3 m10) (anterior m3 m11) (anterior m3 m12)", file=f)
+	print ("(anterior m4 m5) (anterior m4 m6) (anterior m4 m7) (anterior m4 m8) (anterior m4 m9) (anterior m4 m10)", file=f)
+	print ("(anterior m4 m11) (anterior m4 m12) (anterior m5 m6) (anterior m5 m7) (anterior m5 m8) (anterior m5 m9) (anterior m5 m10) (anterior m5 m11)", file=f)
+	print ("(anterior m5 m12) (anterior m6 m7) (anterior m6 m8) (anterior m6 m9) (anterior m6 m10) (anterior m6 m11) (anterior m6 m12)", file=f)
+	print ("(anterior m7 m8) (anterior m7 m9) (anterior m7 m10) (anterior m7 m11) (anterior m7 m12) (anterior m8 m9) (anterior m8 m10) (anterior m8 m11) (anterior m8 m12)", file=f)
+	print ("(anterior m9 m10) (anterior m9 m11) (anterior m9 m12) (anterior m10 m11) (anterior m10 m12) (anterior m11 m12)", file=f)
 	print (")", file=f)
-	print ("(:goal", file=f)
-	print ("(forall (?l - Libro) (imply (libro_a_leer ?l) (and", file=f)
-	print ("(libro_asignado ?l)", file=f)
-	print ("(forall (?pred - Libro) (imply (predecesor ?pred ?l) (or (libro_asignado ?pred) (libro_leido ?pred))))", file=f)
-	print (")", file=f)
-	print ("))", file=f)
-	print (")", file=f)
-	print (")", file=f)
+	print ("(:goal (forall (?l - Libro) (imply (libro_a_leer ?l) (libro_asignado ?l)))))", file=f)
 
 cfg = cp.ConfigParser()
 cfg.read("config.ini")
@@ -99,4 +113,5 @@ OUTPUT_FILE = cfg.get("APP", "output_file")
 
 books = generate_books(NUM_DIF_BOOKS)
 books, sagas = generate_random_sagas(books)
-print_problem(books, sagas)
+pars = generare_random_parallels(books)
+print_problem(books, sagas, pars)
