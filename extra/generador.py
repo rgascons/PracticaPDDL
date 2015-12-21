@@ -82,7 +82,7 @@ def print_problem(books, sagas):
 	print ("(:goal", file=f)
 	print ("(forall (?l - Libro) (imply (libro_a_leer ?l) (and", file=f)
 	print ("(libro_asignado ?l)", file=f)
-	print ("(forall (?pred - Libro) (imply (predecesor ?pred ?l) (libro_asignado ?l)))", file=f)
+	print ("(forall (?pred - Libro) (imply (predecesor ?pred ?l) (or (libro_asignado ?pred) (libro_leido ?pred))))", file=f)
 	print (")", file=f)
 	print ("))", file=f)
 	print (")", file=f)
