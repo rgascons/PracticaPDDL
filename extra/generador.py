@@ -60,7 +60,7 @@ def print_problem(books, sagas):
 			while book_of_the_saga in read_books:
 				k+=1
 				book_of_the_saga = re.sub(r"[0-9]+", str(k), book)
-			if not book_of_the_saga in sagas:
+			if book_of_the_saga in sagas:
 				read_books.add(book_of_the_saga)
 	for book in read_books:
 		print ("(libro_leido " + book + ")", file=f)
