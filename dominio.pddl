@@ -8,7 +8,7 @@
 	(:predicates
 		(predecesor ?x - Libro ?y - Libro) ;?x es predecesor de ?y
 		(anterior ?m - Mes ?n - Mes); ?m es anterior a ?n
-		;(mes_ocupado ?m - Mes)
+		;(mes_libre ?m - Mes)
 		(libro_asignado ?l - Libro)
 		(libro_leido ?l - Libro)
 		(libro_a_leer ?l - Libro)

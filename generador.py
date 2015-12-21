@@ -10,8 +10,8 @@ def generate_books(number_of_books):
 	file = open("MOCK_DATA.csv", "r")
 	lines = file.readlines()
 	books = []
-	for i in range(0, number_of_books):
-		line = random.randint(0, 999)
+	random_unique_ints = random.sample(range(1000), number_of_books)
+	for line in random_unique_ints:
 		books.append(lines[line][:-1])
 	return books
 
@@ -52,19 +52,23 @@ def print_problem(books, sagas):
 	for i in range(0, eligible):
 		rand_book = random.randint(0, len(books)-1)
 		book = books[rand_book]
-		p = re.compile("[a-zA-Z_]*[0-9]+")	#match if the book is part of a saga, if so add the first book of the saga to the set
+		p = re.compile("[a-zA-Z_]*[0-9]+")	#match if the book is part of a saga, if so add the last read book of the saga to the set
 		match = p.match(book)
 		if match is None:
 			read_books.add(book)
 		else:
-			first_of_the_saga = re.sub(r"[0-9]+", "1", book)
-			read_books.add(first_of_the_saga)
+			k = 1
+			book_of_the_saga = re.sub(r"[0-9]+", str(k), book)
+			while book_of_the_saga in read_books:
+				k+=1
+				book_of_the_saga = re.sub(r"[0-9]+", str(k), book)
+			read_books.add(book_of_the_saga)
 	for book in read_books:
 		print ("(libro_leido " + book + ")", file=f)
 
 	# Choose books that the user wants to read
 	books_to_read = set()
-	eligible = random.randint(1, 12)	#cual es el limite?
+	eligible = random.randint(1, 12)
 	for i in range(0, eligible):
 		rand_book = random.randint(0, len(books)-1)
 		book = books[rand_book]
@@ -88,11 +92,11 @@ def print_problem(books, sagas):
 cfg = cp.ConfigParser()
 cfg.read("config.ini")
 
-NUM_BOOKS = int(cfg.get("APP", "num_books"))
+NUM_DIF_BOOKS = int(cfg.get("APP", "num_dif_books"))
 CHANCE_SAGA = int(cfg.get("APP", "chance_saga"))
 SAGA_MIN_BOOKS = int(cfg.get("APP", "saga_min_books"))
 SAGA_MAX_BOOKS = int(cfg.get("APP", "saga_max_books"))
 
-books = generate_books(NUM_BOOKS)
+books = generate_books(NUM_DIF_BOOKS)
 books, sagas = generate_random_sagas(books)
 print_problem(books, sagas)
