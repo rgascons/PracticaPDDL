@@ -30,7 +30,7 @@ def generate_random_sagas(books):
 	return books + list(itertools.chain(*sagas)), sagas
 
 def print_problem(books, sagas):
-	f = open('problema_rand.pddl', 'w')
+	f = open(OUTPUT_FILE, 'w')
 	f.truncate()	#erease any existing content in the file
 
 	print ("(define (problem libros)", file=f)
@@ -60,7 +60,7 @@ def print_problem(books, sagas):
 			while book_of_the_saga in read_books:
 				k+=1
 				book_of_the_saga = re.sub(r"[0-9]+", str(k), book)
-			if book_of_the_saga in sagas:
+			if not book_of_the_saga in sagas:
 				read_books.add(book_of_the_saga)
 	for book in read_books:
 		print ("(libro_leido " + book + ")", file=f)
@@ -95,6 +95,7 @@ NUM_DIF_BOOKS = int(cfg.get("APP", "num_dif_books"))
 CHANCE_SAGA = int(cfg.get("APP", "chance_saga"))
 SAGA_MIN_BOOKS = int(cfg.get("APP", "saga_min_books"))
 SAGA_MAX_BOOKS = int(cfg.get("APP", "saga_max_books"))
+OUTPUT_FILE = cfg.get("APP", "output_file")
 
 books = generate_books(NUM_DIF_BOOKS)
 books, sagas = generate_random_sagas(books)
