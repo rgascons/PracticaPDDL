@@ -10,8 +10,8 @@ def generate_books(number_of_books):
 	file = open("MOCK_DATA.csv", "r")
 	lines = file.readlines()
 	books = []
-	for i in range(0, number_of_books):
-		line = random.randint(0, 999)
+	random_unique_ints = random.sample(range(1000), number_of_books)
+	for line in random_unique_ints:
 		books.append(lines[line][:-1])
 	return books
 
