@@ -1,5 +1,5 @@
 (define (domain libros)
-	(:requirements :strips :adl :typing)
+	(:requirements :strips :adl :typing :equality)
 	
 	(:types
 		Libro Mes - Object
@@ -21,13 +21,14 @@
 		:precondition (and
 				(not (libro_asignado ?libro))
 				(not (libro_leido ?libro))
+				(or (anterior ?ant ?mes) (= ?mes m1))
 				(forall (?pred - Libro)
 					(and 
 						(imply (predecesor ?pred ?libro) 
 							(or (libro_leido ?pred) (exists (?ant - Mes) (and (anterior ?ant ?mes) (asignado_en ?pred ?ant))))
 						)
 						(imply (paralelo ?pred ?libro) 
-							(or (libro_leido ?pred) (asignado_en ?pred ?mes) (and (anterior ?ant ?mes) (asignado_en ?pred ?ant)))
+							(or (libro_leido ?pred) (asignado_en ?pred ?mes) (asignado_en ?pred ?ant))
 						)
 					)
 				)

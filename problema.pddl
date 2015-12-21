@@ -8,7 +8,7 @@
   )
 
   (:init
-	(paralelo pepe elHobbit)
+	(paralelo seniorAnillos1 elHobbit)
 	(paralelo pepito harryPotter2)
     (predecesor harryPotter1 harryPotter2)
 	(predecesor harryPotter2 harryPotter3)
@@ -25,7 +25,7 @@
 	(libro_a_leer starWars2)
 	(libro_a_leer elHobbit)
 	(libro_a_leer pepe)
-	;(libro_a_leer pepito)
+	(libro_a_leer pepito)
 	(anterior m1 m2) 
 	(anterior m2 m3) 
 	(anterior m3 m4) 
