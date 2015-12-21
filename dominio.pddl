@@ -1,5 +1,5 @@
 (define (domain libros)
-	(:requirements :strips :adl :typing :equality)
+	(:requirements :strips :adl :typing)
 	
 	(:types
 		Libro Mes - Object
@@ -14,19 +14,7 @@
 		(asignado_en ?l - Libro ?m - Mes)
 		(paralelo ?par - Libro ?libro - Libro)
 	)
-	
-	;(:action asignar_pred
-	;	:parameters (?libro - Libro ?pred - Libro ?mes - Mes ?ant - Mes)
-	;	:precondition 
-	;	(and 
-	;		(not (libro_asignado ?pred))
-	;		(not (libro_leido ?pred))
-	;		(predecesor ?pred ?libro)
-	;		(or (anterior ?ant ?mes) (and (= ?mes m1) (= ?ant m1)))
-	;	)
-	;	:effect
-	;	(and (asignado_en ?pred ?ant) (libro_asignado ?pred))
-	;)
+
 	
 	;(:action asignar_par
 	;	:parameters (?libro - Libro ?par - Libro ?mes - Mes ?antOig - Mes)
@@ -44,10 +32,10 @@
 
 	(:action asignar
 		:parameters (?libro - Libro ?mes - Mes)
-		:precondition (and
+		:precondition 
+			(and
 				(not (libro_asignado ?libro))
 				(not (libro_leido ?libro))
-				;(or (anterior ?ant ?mes) (and (= ?mes m1) (= ?ant m1)))
 				(forall (?pred - Libro)
 					(or 
 						(libro_leido ?pred)
@@ -55,13 +43,11 @@
 							(imply (predecesor ?pred ?libro) 
 								(exists (?ant - Mes) (and (anterior ?ant ?mes) (asignado_en ?pred ?ant)))
 							)
-							(imply (paralelo ?pred ?libro)
-								(or (libro_leido ?pred) (asignado_en ?pred ?mes))
-							)
+							(imply (paralelo ?pred ?libro) (asignado_en ?pred ?mes))
 						)
 					)
 				)
-			 )
+			)
 		:effect (and (asignado_en ?libro ?mes) (libro_asignado ?libro))
 	)
 )
