@@ -72,7 +72,7 @@ def print_problem(books, sagas):
 	for i in range(0, eligible):
 		rand_book = random.randint(0, len(books)-1)
 		book = books[rand_book]
-		if not rand_book in read_books:
+		if not book in read_books:
 			books_to_read.add(book)
 	for book in books_to_read:
 		print ("(libro_a_leer " + book + ")", file=f)
